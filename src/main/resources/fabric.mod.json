@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "batleroyalborder",
+	"version": "${version}",
+	"name": "BatleRoyalBorder",
+	"description": "A Minecraft mod for creating Battle Royale experiences with customizable world border shrinking, countdown timers, and boss bar progress indicators.",
+	"authors": [
+		"Neburalis"
+	],
+	"contact": {
+		"homepage": "https://github.com/Neburalis",
+		"sources": "https://github.com/Neburalis/BatleRoyalBorder"
+	},
+	"license": "MIT",
+	"icon": "assets/batleroyalborder/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"me.naburalis.batleroyalborder.BatleRoyalBorder"
+		]
+	},
+	"mixins": [
+		"batleroyalborder.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.8",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
