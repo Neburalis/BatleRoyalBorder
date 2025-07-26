@@ -3,7 +3,7 @@
 	"id": "batleroyalborder",
 	"version": "${version}",
 	"name": "BatleRoyalBorder",
-	"description": "A Minecraft mod for creating Battle Royale experiences with customizable world border shrinking, countdown timers, and boss bar progress indicators.",
+	"description": "A mod that introduces the mechanics of reducing the boundaries of the world, similar to games of the battle royale genre. Ideal for UHC PVP events",
 	"authors": [
 		"Neburalis"
 	],
