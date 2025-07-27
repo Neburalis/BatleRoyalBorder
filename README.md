@@ -1,5 +1,9 @@
 # BatleRoyalBorder
 
+![visitors](http://badge.neburalis.ru/visitors/neburalis.BatleRoyalBorder?label=viewings)
+
+<img alt="fabric-api" height="56" src="https://i.imgur.com/OBp7tUT.png">
+
 **Description:**
 
 BatleRoyalBorder is a Minecraft mod designed for players who enjoy a more dynamic and challenging gameplay experience. This mod introduces commands that allow you to shrink the world border incrementally, creating an intense and competitive environment. Perfect for UHC (Ultra Hardcore) games or any scenario where you want to force player encounters and add a thrilling twist to your survival gameplay.
