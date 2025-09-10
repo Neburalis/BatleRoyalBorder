@@ -8,8 +8,9 @@
 		"Neburalis"
 	],
 	"contact": {
-		"homepage": "https://github.com/Neburalis",
-		"sources": "https://github.com/Neburalis/BatleRoyalBorder"
+		"homepage": "https://modrinth.com/mod/batleroyalborder",
+		"sources": "https://github.com/Neburalis/BatleRoyalBorder",
+		"issues": "https://github.com/Neburalis/BatleRoyalBorder/issues/new"
 	},
 	"license": "MIT",
 	"icon": "assets/batleroyalborder/icon.png",
@@ -19,9 +20,6 @@
 			"me.naburalis.batleroyalborder.BatleRoyalBorder"
 		]
 	},
-	"mixins": [
-		"batleroyalborder.mixins.json"
-	],
 	"depends": {
 		"fabricloader": ">=0.16.14",
 		"minecraft": "~1.21.8",

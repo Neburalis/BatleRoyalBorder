@@ -44,6 +44,32 @@ public class TimeUtils {
     }
 
     /**
+     * Formats seconds into a string "hh:mm:ss" format.
+     * Example: 3665 -> "01:01:05".
+     */
+    public static String formatSeconds(long seconds) {
+        long hours = seconds / 3_600;
+        seconds %= 3_600;
+        long minutes = seconds / 60;
+        seconds %= 60;
+
+        StringBuilder sb = new StringBuilder();
+        if (hours > 0) {
+            sb.append(hours).append(":");
+        }
+
+        if (minutes > 0) {
+            sb.append(minutes).append(":");
+            // when minutes are present, pad seconds to 2 digits
+            sb.append(String.format("%02d", seconds));
+        } else {
+            // minutes are zero and omitted
+            sb.append(seconds);
+        }
+        return sb.toString();
+    }
+
+    /**
      * Formats milliseconds into a string "h:m:ss.SSS" (hours:minutes:seconds.milliseconds).
      * Example: 3920200 -> "1:5:20.200".
      */

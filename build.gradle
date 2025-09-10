@@ -24,7 +24,6 @@ loom {
 	mods {
 		"batleroyalborder" {
 			sourceSet sourceSets.main
-			sourceSet sourceSets.client
 		}
 	}
 

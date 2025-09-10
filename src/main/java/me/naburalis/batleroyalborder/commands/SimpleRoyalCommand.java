@@ -1,7 +1,6 @@
 package me.naburalis.batleroyalborder.commands;
 
 import com.mojang.brigadier.Command;
-import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.MinecraftServer;
@@ -26,9 +25,24 @@ public class SimpleRoyalCommand {
     private static volatile ServerBossBar bossBar;
 
     // Current parameters (initialised from config, can be overridden via /simpleroyal set ...)
-    private static volatile double shrinkAmount = Config.shrinkAmount;
-    private static volatile int shrinkTime = Config.shrinkTime;
-    private static volatile int delayTime = Config.delayTime;
+    private static volatile double shrinkAmount = Config.getDouble("simpleroyal.shrinkAmount");
+    private static volatile int shrinkTime = Config.getInteger("simpleroyal.shrinkTime");
+    private static volatile int delayTime = Config.getInteger("simpleroyal.delayTime");
+
+    /**
+     * Converts a string color name to BossBar.Color enum
+     */
+    private static BossBar.Color parseBossBarColor(String colorName) {
+        switch (colorName.toUpperCase()) {
+            case "PINK": return BossBar.Color.PINK;
+            case "BLUE": return BossBar.Color.BLUE;
+            case "GREEN": return BossBar.Color.GREEN;
+            case "YELLOW": return BossBar.Color.YELLOW;
+            case "PURPLE": return BossBar.Color.PURPLE;
+            case "WHITE": return BossBar.Color.WHITE;
+            default: return BossBar.Color.RED;
+        }
+    }
 
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
@@ -75,8 +89,8 @@ public class SimpleRoyalCommand {
 
         server.getPlayerManager().broadcast(Text.literal("World border shrinking started!"), false);
 
-        // Create boss bar
-        bossBar = new ServerBossBar(Text.literal("Border Shrinking"), BossBar.Color.RED, BossBar.Style.PROGRESS);
+        // Create boss bar with color from config
+        bossBar = new ServerBossBar(Text.literal("Border Shrinking"), parseBossBarColor(Config.getString("simpleroyal.bossBar.color")), BossBar.Style.PROGRESS);
         server.getPlayerManager().getPlayerList().forEach(bossBar::addPlayer);
 
         shrinkThread = new Thread(() -> {
@@ -97,7 +111,7 @@ public class SimpleRoyalCommand {
                         final long remaining = i;
                         final float progress = (float) remaining / seconds;
                         server.execute(() -> {
-                            bossBar.setName(Text.literal("Shrinking in " + remaining + "s"));
+                            bossBar.setName(Text.literal("Shrinking in " + TimeUtils.formatSeconds(remaining)));
                             bossBar.setPercent(progress);
                         });
                         
@@ -156,8 +170,7 @@ public class SimpleRoyalCommand {
     }
 
     private static int set(ServerCommandSource source, String amountStr, String timeStr, String delayStr) {
-        long amountLong = NumberUtils.parseWithSuffix(amountStr);
-        shrinkAmount = amountLong;
+        shrinkAmount = NumberUtils.parseWithSuffix(amountStr);
         shrinkTime = TimeUtils.parseTime(timeStr);
         delayTime = TimeUtils.parseTime(delayStr);
         source.sendFeedback(() -> Text.literal("Parameters set: amount=" + NumberUtils.formatWithSuffix((long) shrinkAmount) + ", time=" + TimeUtils.formatMillis(shrinkTime) + ", delay=" + TimeUtils.formatMillis(delayTime)), false);
@@ -193,9 +206,9 @@ public class SimpleRoyalCommand {
     }
 
     private static int reset(ServerCommandSource source) {
-        shrinkAmount = Config.shrinkAmount;
-        shrinkTime = Config.shrinkTime;
-        delayTime = Config.delayTime;
+        shrinkAmount = Config.getDouble("simpleroyal.shrinkAmount");
+        shrinkTime = Config.getInteger("simpleroyal.shrinkTime");
+        delayTime = Config.getInteger("simpleroyal.delayTime");
         source.sendFeedback(() -> Text.literal("Parameters reset to defaults."), false);
         return Command.SINGLE_SUCCESS;
     }
